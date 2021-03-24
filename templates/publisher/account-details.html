@@ -1,0 +1,143 @@
+{% extends "publisher/_publisher_layout.html" %}
+
+{% block meta_title %}
+Account details — Linux software in the Snap Store
+{% endblock %}
+
+{% block content %}
+
+<section class="p-strip">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+  <div class="row">
+    <div class="col-12">
+      {% for category, message in messages %}
+      <div id="market-form-status" class="p-notification--{{ category }}">
+        <p class="p-notification__response">
+          {{ message }}
+        </p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+  {% endwith %}
+  <div class="row">
+    <div class="col-12">
+      <h3 class="u-float--left">Publisher account details</h3>
+      <a href="{{ LOGIN_URL }}" class="p-link--external u-float--right">Edit details</a>
+    </div>
+  </div>
+  {% if errors %}
+    <div class="row">
+      <div class="p-notification--negative">
+        <p class="p-notification__response">
+          {% for error in errors %}
+            {{ error.message }}<br />
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-2">
+      Full name:
+    </div>
+    <div class="col-6">
+      <p class="u-no-padding--top"><b>{{ displayname }}</b></p>
+      <p class="p-form-help-text">
+        Who your users will see as the publisher of your snap.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      Username:
+    </div>
+    <div class="col-6">
+      <p class="u-no-padding--top"><b>{{ username }}</b></p>
+      <p class="p-form-help-text">
+        This is a shorthand version of your name, used when space on screen is limited.
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-2">
+      Email address:
+    </div>
+    <div class="col-6">
+      <p class="u-no-padding--top"><b>{{ email }}</b></p>
+      <p class="p-form-help-text">
+        Your email address will not be shared publicly.
+      </p>
+    </div>
+  </div>
+  {% if subscriptions %}
+    <div class="row">
+      <div class="col-2">
+        Email preferences:
+      </div>
+      <div class="col-6">
+          <form method="post" class="js-preferences-form">
+              <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+              <input type="hidden" name="email" value="{{ email }}" />
+              <input
+                      type="checkbox"
+                      {% if subscriptions.newsletter %}checked{% endif %}
+                      name="newsletter"
+                      id="newsletter">
+              <label for="newsletter" class="u-no-margin--bottom">
+                  Blog posts delivered
+              </label>
+              <p class="p-form-help-text">
+                  Get our latest and greatest blog posts delivered to your inbox.
+              </p>
+
+              <p><br />Please note, you will still recieve required platform related emails such as registration of snap names, the review status of a snap or any security vulnerabilities.</p>
+              <button type="submit" class="p-button--positive">Save email preferences</button>
+          </form>
+      </div>
+    </div>
+  {% endif %}
+  <div class="row">
+    <div class="col-2">
+      <p>GitHub Account:</p>
+    </div>
+    {% if user.github_name and user.github_username %}
+      <div class="col-6">
+        <p>
+          <i class="p-icon--github"></i> <b>{{ user.github_name }}</b> ({{ user.github_username }})
+        </p>
+        <p>
+          <a class="p-link--external" href="https://github.com/settings/connections/applications/{{github_app}}">
+            Review application access
+          </a>
+        </p>
+        <p>
+          <a href="{{ url_for('builder.disconnect') }}">Disconnect</a>
+        </p>
+      </div>
+    {% else %}
+      <div class="col-6">
+        <a href="{{ url_for('builder.authenticate') }}">
+          <i class="p-icon--github"></i> Connect GitHub Account
+        </a>
+        <p class="p-form-help-text">
+          Get automated builds for your snaps by connecting your GitHub account with snapcraft.io.
+        </p>
+      </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% if subscriptions %}
+<script src="{{ static_url('js/dist/publisher.js') }}"></script>
+<script>
+  Raven.context(function () {
+    snapcraft.publisher.submitEnabler(".js-preferences-form", [".js-preferences-form button[type='submit']"]);
+  });
+</script>
+{% endif %}
+{% endblock %}

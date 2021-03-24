@@ -1,0 +1,257 @@
+// colour definitions
+$color-brand: #00302f;
+$color-accent: $color-brand;
+$color-navigation-background: #252525;
+
+// vanilla patterns
+@import 'vanilla-framework/scss/vanilla';
+
+@include vf-base;
+
+
+@include vf-p-accordion;
+@include vf-p-card; // required by vf-p-tooltips
+@include vf-p-divider;
+@include vf-p-links;
+@include vf-p-lists;
+@include vf-p-grid;
+@include vf-p-grid-modifications;
+@include vf-p-buttons;
+@include vf-p-strip;
+@include vf-p-modal;
+@include vf-p-muted-heading;
+@include vf-p-navigation;
+@include vf-p-notification;
+@include vf-p-footer;
+@include vf-p-tooltips;
+@include vf-p-forms;
+@include vf-p-form-help-text;
+@include vf-p-headings;
+@include vf-p-matrix;
+@include vf-p-icons;
+@include vf-p-heading-icon;
+@include vf-p-code-snippet;
+@include vf-p-form-validation;
+@include vf-p-contextual-menu;
+@include vf-p-breadcrumbs;
+@include vf-p-pagination;
+
+// vanilla utilities
+@include vf-u-floats;
+@include vf-u-off-screen;
+@include vf-u-margin-collapse;
+@include vf-u-padding-collapse;
+@include vf-u-vertically-center;
+@include vf-u-align;
+@include vf-u-clearfix;
+@include vf-u-animations;
+@include vf-u-image-position;
+@include vf-u-equal-height;
+@include vf-u-hide;
+@include vf-u-show;
+
+@import 'patterns_fluid-grid';
+@include p-fluid-grid;
+
+@import 'patterns_inline-list--compact';
+@include p-inline-list--compact;
+
+@import 'patterns_social-icons';
+@include p-social-icons;
+
+@import 'patterns_media-object';
+@include p-media-object;
+
+@import 'patterns_media-object--large';
+@include p-media-object--large;
+
+@import 'patterns_table-key-value';
+@include vf-p-table-key-value;
+
+@import 'patterns_button_spinner';
+@include p-button-spinner;
+
+@import 'patterns_annotated_code';
+@include p-annotated-code;
+
+@import 'map';
+@include snap-details-map;
+
+@import 'search-form';
+@include search-form;
+
+@import 'patterns_sticky_footer';
+@include p-sticky-footer;
+
+@import 'snapcraft_p-navigation';
+@include snapcraft-p-navigation;
+
+@import 'snapcraft_p-tabs';
+@include snapcraft-p-tabs;
+
+@import 'snapcraft_custom-typography';
+@include snapcraft-custom-typography;
+
+@import 'snapcraft_banner';
+@include snapcraft-banner;
+
+@import 'snapcraft_graph-tooltip';
+@include snapcraft-graph-tooltip;
+
+@import 'snapcraft_metrics';
+@include snapcraft-metrics;
+
+@import 'snapcraft_market';
+@include snapcraft-market;
+
+@import 'patterns_testimonial';
+@include vf-p-testimonial;
+
+@import 'button-overrides';
+@include button-overrides;
+
+@import 'patterns_logo-links';
+@include p-logo-link;
+
+@import 'snapcraft_custom-typography';
+@include snapcraft-custom-typography;
+
+@import 'snapcraft_market_screenshots';
+@include snapcraft-market-screenshots;
+
+@import 'snapcraft_snap-list';
+@include snapcraft-snap-list;
+
+@import 'snapcraft_account-snaps';
+@include snapcraft-account-snaps;
+
+@import 'patterns_maas_modal';
+@include maas-p-modal;
+
+@import 'snapcraft_details_heading';
+@include snapcraft-details-heading;
+
+@import 'snapcraft_footer';
+@include snapcraft-footer;
+
+@import 'snapcraft_snap-details';
+@include snapcraft-snap-details;
+
+@import 'snapcraft_snap-builds';
+@include snapcraft-snap-builds;
+
+@import 'snapcraft_404';
+@include snapcraft-404;
+
+@import 'snapcraft_p-form-help-text';
+@include snapcraft-p-form-help-text;
+
+@import 'snapcraft_p-form-validation';
+@include snapcraft-p-form-validation;
+
+@import 'snapcraft_p-notifications';
+@include snapcraft-p-beta-notification;
+
+@import 'snapcraft_distro-chart';
+@include snapcraft-distro-chart;
+
+@import 'snapcraft_p-verified';
+@include snapcraft-p-verified;
+
+@import 'utilities_crop';
+@include u-insights-crop;
+
+@import 'patterns_card';
+@include insights-p-card;
+
+@import 'patterns_blog-post';
+@include snapcraft-p-blog-post;
+
+@import 'patterns_nested-inputs';
+@include snapcraft-p-nested-inputs;
+
+@import 'patterns_carousel';
+@include snapcraft-p-carousel;
+
+@import 'patterns_media-object--snap';
+@include snapcraft-p-media-object--snap;
+
+@import 'snapcraft_release';
+@include snapcraft-release;
+
+@import 'snapcraft_p-build';
+@include snapcraft-p-build;
+
+@import 'patterns_case-study';
+@include snapcraft-p-case-study;
+
+@import 'patterns_snap-row';
+@include snapcraft-p-snap-row;
+
+@import 'patterns_blog-list';
+@include snapcraft-p-blog-list;
+
+@import 'patterns_form-multiselect';
+@include snapcraft-p-multiselect;
+
+@import 'patterns_first-snap-flow';
+@include snapcraft-p-first-snap-flow;
+
+@import 'snapcraft_p-list-step';
+@include snapcraft-p-list-step;
+
+@import 'snapcraft_p-breadcrumbs';
+@include snapcraft-p-breadcrumbs;
+
+@import 'patterns_code-copyable';
+@include vf-p-code-copyable;
+
+@import 'snapcraft_p-code-block';
+@include snapcraft-p-code-block;
+
+@import 'snapcraft_p-code-snippet';
+@include snapcraft-p-code-snippet;
+
+@import 'snapcraft-publicise';
+@include snapcraft-publicise;
+
+@import 'snapcraft-publisher';
+@include snapcraft-publisher;
+
+@import 'patterns_modal';
+@include vf-p-modal-snapcraft;
+
+@import 'patterns_strip_slanted';
+@include p-strip-slanted;
+
+@import 'snapcraft_store';
+@include snapcraft-store;
+
+@import 'snapcraft_dispute-list';
+@include snapcraft-p-dispute-list;
+
+@import 'snapcraft_embedded_card_modal';
+@include snapcraft-embedded-card-modal;
+
+@import 'snapcraft_p-file-input';
+@include snapcraft-p-file-input;
+
+@import 'patterns_pagination';
+@include snapcraft-p-pagination;
+
+@import 'snapcraft-p_grid';
+@include snapcraft-p-grid;
+
+@import 'snapcraft_p-featured-snap';
+@include snapcraft-p-featured-snap;
+
+@import 'patterns_distro_banner';
+@include p-distro-banner;
+
+@import 'snapcraft_p-docs';
+@include snapcraft-pattern-docs;
+
+html,
+body {
+  background: $color-x-light; // This will be fix on vanilla https://github.com/vanilla-framework/vanilla-framework/issues/2129
+}

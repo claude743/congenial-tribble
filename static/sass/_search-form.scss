@@ -1,0 +1,41 @@
+@mixin search-form {
+
+  .snapcraft-banner-background .p-form--search {
+    width: 100%;
+  }
+
+  .p-form--search {
+    width: 60%;
+
+    @media screen and (max-width: $breakpoint-navigation-threshold) {
+      width: 100%;
+
+      .p-button--positive {
+        width: 100%;
+      }
+    }
+
+    .p-form__group {
+      flex-grow: 1;
+
+      &--no-grow {
+        flex-grow: 0;
+      }
+
+      @media screen and (max-width: $breakpoint-navigation-threshold) {
+        margin-bottom: $spv-inter--regular;
+      }
+    }
+
+    .p-form__control {
+      width: 100%;
+    }
+  }
+
+  .no-search-query {
+    font-weight: 400;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
