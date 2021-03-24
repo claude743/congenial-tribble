@@ -1,0 +1,2 @@
+name: test-httplab-{name}
+download: git clone https://github.com/snapcraft-docs/httplab

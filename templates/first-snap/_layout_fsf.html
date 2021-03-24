@@ -1,0 +1,37 @@
+{% extends webapp_config['LAYOUT'] %}
+
+{% block meta_copydoc %}https://docs.google.com/spreadsheets/d/1gN_xcaAFFP_ckDvWeNDpD9ogbRXFgcXN0w0ITZQB0e4/edit#gid=779498506{% endblock %}
+
+{% block content %}
+  {% include "first-snap/_breadcrumb.html" %}
+  <div id="main-content" class="p-strip is-shallow">
+    {% block fsf_content %}
+    {% endblock %}
+  </div>
+
+  {% if self.fsf_pagination() %}
+  <div class="u-fixed-width u-clearfix">
+    {% block fsf_pagination %}{% endblock %}
+  </div>
+  {% endif %}
+{% endblock %}
+
+{% block scripts_modules %}
+  <script src="{{ static_url('js/modules/clipboard.min.js') }}" defer></script>
+{% endblock %}
+
+{% block scripts_includes %}
+  <script src="{{ static_url('js/dist/public.js') }}" defer></script>
+{% endblock %}
+
+{% block scripts %}
+  <script>
+    window.addEventListener("DOMContentLoaded", function() {
+      Raven.context(function() {
+        if (typeof ClipboardJS !== 'undefined') {
+          new ClipboardJS('.js-clipboard-copy');
+        }
+      });
+    });
+  </script>
+{% endblock %}
