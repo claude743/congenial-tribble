@@ -1,0 +1,114 @@
+{% extends "publisher/_publisher_layout.html" %}
+
+{% block meta_title %}
+Publisher metrics for {{ snap_title }}
+{% endblock %}
+
+{% block content %}
+  <div id="main-content" class="u-no-margin--top">
+    {% set selected_tab='metrics' %}
+    {% include "publisher/_header.html" %}
+
+    {% if nodata %}
+      <section class="p-strip--light is-shallow">
+        <div class="row">
+          <div class="col-6">
+            <h2 class="p-heading--four">Measure your snap's performance</h2>
+          </div>
+          <div class="col-6">
+            <p>You'll be able to see active devices and territories when people start using your snap.</p>
+          </div>
+        </div>
+      </section>
+    {% endif %}
+    <section class="p-strip is-shallow{% if nodata %} is-empty{% endif %}">
+      <div class="row">
+        <div class="u-clearfix">
+          <h4 class="u-float--left">Weekly active devices</h4>
+          <div class="p-heading--four u-float--right u-no-margin--top">
+            <strong>{{ format_number(latest_active_devices) }}</strong>
+          </div>
+        </div>
+        <hr />
+        <div class="grid u-clearfix">
+          <div class="col-3">
+            <select class="p-form__control metrics-period"
+                    {% if nodata %}disabled="disabled"{% endif %}>
+              <option value="7d"{% if metric_period == '7d' %} selected="selected"{% endif %}>Past 7 days</option>
+              <option value="30d"{% if metric_period == '30d' %} selected="selected"{% endif %}>Past 30 days</option>
+              <option value="3m"{% if metric_period == '3m' %} selected="selected"{% endif %}>Past 3 months</option>
+              <option value="6m"{% if metric_period == '6m' %} selected="selected"{% endif %}>Past 6 months</option>
+              <option value="1y"{% if metric_period == '1y' %} selected="selected"{% endif %}>Past year</option>
+              <option value="2y"{% if metric_period == '2y' %} selected="selected"{% endif %}>Past 2 years</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <select class="p-form__control active-devices"
+                    {% if nodata %}disabled="disabled"{% endif %}>
+              <option value="version"{% if active_device_metric == 'version' %} selected="selected"{% endif %}>By version</option>
+              <option value="os"{% if active_device_metric == 'os' %} selected="selected"{% endif %}>By OS</option>
+              <option value="channel"{% if active_device_metric == 'channel' %} selected="selected"{% endif %}>By channel</option>
+            </select>
+          </div>
+        </div>
+        <div id="activeDevices" class="snapcraft-metrics__graph snapcraft-metrics__active-devices">
+          <div class="row">
+            <div class="col-12">
+              <div id="area-holder">
+                <svg width="100%" height="320"></svg>
+              </div>
+            </div>
+          </div>
+          <div class="row" data-js="annotations-hover">
+            {% for category in active_devices_annotations.series %}
+              <div class="col-4">
+                <p data-js="annotation-hover" data-id="category-{{ category.name }}">
+                  {% if category.name == "featured" %}
+                  ⭐ <small><b>Featured</b> snap since
+                  {% else %}
+                  🗂 <small>Added to <b>{{ category.display_name }}</b> in {% endif %}<b>{{ category.display_date }}</b>
+                  </small>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="p-strip is-shallow{% if nodata %} is-empty{% endif %}">
+      <div class="row">
+        <div class="u-clearfix">
+          <h1 class="u-float--left p-heading--four">Territories</h1>
+          <div class="p-heading--four u-float--right u-no-margin--top">
+            <strong>{{ territories_total }}</strong>
+          </div>
+        </div>
+        <hr />
+        <div id="territories" class="snapcraft-territories">
+        </div>
+      </div>
+    </section>
+  </div>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ static_url('js/dist/publisher.js') }}"></script>
+  <script>
+    Raven.context(function () {
+      snapcraft.publisher.selector('.metrics-period', 'period');
+      snapcraft.publisher.selector('.active-devices', 'active-devices');
+      snapcraft.publisher.metrics({
+        defaultTrack: {{ default_track|tojson }},
+        activeDevices: {
+          selector: '#activeDevices',
+          metrics: {{ active_devices|safe }},
+          annotations: {{ active_devices_annotations|safe }},
+          type: '{{ active_device_metric }}'
+        },
+        territories: {
+          selector: '#territories',
+          metrics: {{ territories|safe }}
+        }
+      });
+    });
+  </script>
+{% endblock %}

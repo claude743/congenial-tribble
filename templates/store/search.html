@@ -1,0 +1,100 @@
+{% extends webapp_config['LAYOUT'] %}
+
+{% block meta_title %}
+  {% if query %}
+    Snap search results for "{{ query }}"
+    {% if category_display %}
+      in {{ category_display }}
+      {% endif %}
+  {% elif category_display %}
+    {{ category_display }}
+  {% else %}
+    Search Snap Store
+  {% endif %}
+  — Linux software in the Snap Store
+{% endblock %}
+
+{% block content %}
+  <section id="main-content" class="p-strip--image is-shallow snapcraft-banner-background">
+  <div class="row">
+    <form action="/search" class="p-form p-form--inline p-form--search">
+      <div class="p-form__group p-form__group--no-grow">
+        <label for="category-input" class="u-off-screen">Category</label>
+        <div class="p-form__control u-clearfix">
+          <select id="category-input" name="category" value="{{ category }}" class="u-no-margin--bottom">
+            <option value="">All snaps</option>
+            {% for cat in categories %}
+              <option value="{{ cat.slug }}"
+              {% if category == cat.slug %}
+                selected="selected"
+              {% endif %}
+              >{{ cat.name }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="p-form__group">
+        <label for="search-input" class="u-off-screen">Search</label>
+        <div class="p-form__control u-clearfix">
+          <input class="u-no-margin--bottom" id="search-input" type="search" name="q" value="{{ query }}" />
+        </div>
+      </div>
+      <button type="submit" alt="search" class="p-button--positive">Search</button>
+    </form>
+  </div>
+  </section>
+
+  <section class="p-strip is-shallow">
+    {% if snaps %}
+      <div class="row">
+        {% if not query and category_display %}
+          <a href="/store">&lsaquo; Categories</a>
+          <h2>{{ category_display }} snaps</h2>
+        {% else %}
+          {% if total %}
+            <h2>We’ve found {{ total }} snaps</h2>
+          {% else %}
+            <h2>We’ve found some snaps</h2>
+          {% endif %}
+        {% endif %}
+      </div>
+      <div class="row">
+        <div class="p-fluid-grid--condensed">
+          {% for snap in snaps %}
+            <div class="p-fluid-grid__item">
+              {% include 'store/_media-object-snap-partial.html' %}
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    {% else %}
+      <div class="row">
+        <h2>We couldn't find anything for your search <div class="no-search-query">{{query}}.</div></h2>
+        <h4>Try using some different, or more general keywords.</h4>
+    {% endif %}
+  </section>
+
+  {% if links %}
+  <section class="p-strip is-shallow">
+    <nav class="row">
+      <div class="u-float--left u-align--left">
+        {% if links.first %}<a href="{{ links.first }}">&#171;&nbsp;First</a>&nbsp;{% endif %}
+        {% if links.prev %}<a href="{{ links.prev }}">&#8249;&nbsp;Previous</a>{% endif %}
+      </div>
+      <div class="u-float--right u-align--right">
+        {% if links.next %}<a href="{{ links.next }}">Next&nbsp;&#8250;</a>{% endif %}
+        {% if links.last %}&nbsp;<a href="{{ links.last }}">Last&nbsp;&#187;</a>{% endif %}
+      </div>
+    </nav>
+  </section>
+  {% endif %}
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ static_url('js/dist/public.js') }}"></script>
+  <script>
+    Raven.context(function () {
+      snapcraft.public.storeCategories();
+    });
+  </script>
+{% endblock %}

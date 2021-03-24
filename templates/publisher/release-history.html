@@ -1,0 +1,33 @@
+{% extends "publisher/_publisher_layout.html" %}
+
+{% block meta_title %}
+Releases and revision history for {% if snap_title %}{{ snap_title }}{% else %}{{ snap_name }}{% endif %}
+{% endblock %}
+
+{% block content %}
+<div id="main-content" class="u-no-margin--top">
+  {% set selected_tab='release' %}
+  {% include "publisher/_header.html" %}
+
+  <section class="p-strip is-shallow">
+    <div id="release-history"></div>
+  </section>
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+  <script src="{{ static_url('js/dist/release.js') }}"></script>
+  <script>
+    snapcraft.release.initReleases('#release-history',
+      {{ snap_name|tojson }},
+      {{ release_history|tojson }},
+      {{ channel_maps_list|tojson }},
+      {
+        defaultTrack: 'latest',
+        csrfToken: {{ csrf_token()|tojson }}
+      }
+    );
+  </script>
+{% endblock %}

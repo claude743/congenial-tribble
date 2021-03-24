@@ -1,0 +1,49 @@
+@mixin snapcraft-metrics {
+  $opaque-white: rgba(255, 255, 255, 1);
+  $transparent-white: rgba(255, 255, 255, 0);
+
+  .snapcraft-metrics__graph {
+    opacity: 0;
+    position: relative;
+    transition: opacity .333s;
+
+    .p-tooltip {
+      position: absolute;
+      z-index: 100;
+
+      .p-tooltip__message {
+        display: block;
+      }
+    }
+
+    .domain {
+      display: none;
+    }
+
+    .tick line {
+      stroke: $color-mid-light;
+    }
+
+    .area-label {
+      pointer-events: none;
+
+      &.is-hidden {
+        display: none;
+      }
+    }
+  }
+
+
+  .is-empty {
+    h3,
+    hr,
+    .p-heading--three {
+      color: $color-mid-light;
+    }
+
+    svg {
+      opacity: .4;
+      pointer-events: none;
+    }
+  }
+}

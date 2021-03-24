@@ -1,0 +1,62 @@
+{% extends webapp_config['LAYOUT'] %}
+
+{% block meta_title %}Install Linux apps using the Snap Store | Snapcraft {% endblock %}
+
+{% block meta_copydoc %}https://docs.google.com/document/d/10j4xltRGXrqp1e3mJicSft3vHpzpnCdCRXMNpspvJ2c/edit{% endblock %}
+
+{% block meta_description %}Find and install the best Linux software for all major Linux distributions.{% endblock %}
+
+{% block meta_schema %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@id": "https://snapcraft.io/#website",
+      "@type": "WebSite",
+      "name": "Snapcraft",
+      "url": "https://snapcraft.io{{ self.meta_path() }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://snapcraft.io/search?q={q}",
+        "query-input": "required name=q"
+      }
+    }
+  </script>
+{% endblock %}
+
+{% block content %}
+  {% include 'partials/search-bar.html' %}
+
+  <section class="p-strip is-shallow">
+    <div class="row">
+      <h3 class="p-heading--four"><a href="/search?category=featured">Featured&nbsp;&rsaquo;</a></h3>
+    </div>
+    <div class="row">
+      {% set snaps = featured_snaps %}
+      {% set category = "featured" %}
+      {% include "store/_category-partial.html" %}
+    </div>
+
+    {% for category in categories %}
+      <div class="row">
+        <hr />
+      </div>
+
+      <div class="row">
+        <h3 class="p-heading--four"><a href="/search?category={{ category.slug }}">{{ category.name }}&nbsp;&rsaquo;</a></h3>
+      </div>
+      <div data-category="{{ category.slug }}" class="row js-store-category">
+        {% include "store/_empty-category-partial.html" %}
+        {# _category-partial.html loaded via JS #}
+      </div>
+    {% endfor %}
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ static_url('js/dist/public.js') }}"></script>
+  <script>
+    Raven.context(function () {
+      snapcraft.public.storeCategories();
+    });
+  </script>
+{% endblock %}
