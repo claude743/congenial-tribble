@@ -1,0 +1,87 @@
+{% extends webapp_config['LAYOUT'] %}
+
+{% block meta_title %}Install Linux apps using the Snap Store | Snapcraft {% endblock %}
+
+{% block meta_copydoc %}https://docs.google.com/document/d/10j4xltRGXrqp1e3mJicSft3vHpzpnCdCRXMNpspvJ2c/edit{% endblock %}
+
+{% block meta_description %}Find and install the best Linux software for all major Linux distributions.{% endblock %}
+
+{% block meta_schema %}
+  <script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@id": "https://snapcraft.io/#website",
+      "@type": "WebSite",
+      "name": "Snapcraft",
+      "url": "https://snapcraft.io{{ self.meta_path() }}",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://snapcraft.io/search?q={q}",
+        "query-input": "required name=q"
+      }
+    }
+  </script>
+{% endblock %}
+
+{% block content %}
+  {% include 'partials/search-bar.html' %}
+
+  <section class="p-strip is-shallow">
+    <div class="u-fixed-width u-clearfix">
+        <h2 class="u-float-left">Featured</h2>
+        <a href="/search?category=featured" class="p-button--neutral u-float-right u-hide--small p-featured-snap__see-more">See more...</a>
+    </div>
+
+    {% set snaps = featured_snaps %}
+    {% set category = "featured" %}
+    {% set show_summary = True %}
+    {% include "store/_category-partial.html" %}
+
+    <div class="u-fixed-width u-clearfix u-hide--medium u-hide--large">
+      <a href="/search?category=featured" class="p-button--neutral u-float-right">See more in Featured</a>
+    </div>
+  </section>
+
+  {% for category in categories %}
+  <section class="p-strip is-shallow">
+    <div class="u-fixed-width u-clearfix">
+        <h2 class="u-float-left">{{ category.name }}</h2>
+        <a href="/search?category={{ category.slug }}" class="p-button--neutral u-float-right u-hide--small p-featured-snap__see-more">See more...</a>
+    </div>
+    <div data-category="{{ category.slug }}" class="js-store-category">
+      {% include "store/_empty-category-partial.html" %}
+      {# _category-partial.html loaded via JS #}
+    </div>
+    <div class="u-fixed-width u-clearfix u-hide--medium u-hide--large">
+      <a href="/search?category={{ category.slug }}" class="p-button--neutral u-float-right">See more in {{ category.name }}</a>
+    </div>
+  </section>
+  {% endfor %}
+
+  <section class="p-strip--image is-deep is-dark p-strip--snap-store">
+    <div class="row u-vertically-center">
+      <div class="col-7 u-fade-left--medium">
+        <p class="u-hide--large u-hide--medium u-align--center">
+          <img src="https://assets.ubuntu.com/v1/08af835e-Snap+Store+shopping+icon.svg" alt="Get the Snap Store snap" class="p-icon--snap-store u-fade-up">
+        </p>
+        <h1 class="p-heading--two">Access the App Store for Linux <br class="u-hide--small u-hide--medium">from your desktop</h1>
+        <p class="u-no-padding--top p-heading--four">Easily find and install new applications or remove existing installed applications with the Snap Store snap.</p>
+        <p>
+          <a href="/snap-store" class="p-button--positive">Get the Snap Store</a>
+        </p>
+      </div>
+      <div class="col-4 u-hide--small col-start-large-9">
+          <img src="https://assets.ubuntu.com/v1/08af835e-Snap+Store+shopping+icon.svg" alt="Get the Snap Store snap" class="p-icon--snap-store u-fade-up">
+      </div>
+    </div>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{{ static_url('js/dist/public.js') }}"></script>
+  <script>
+    Raven.context(function () {
+      snapcraft.public.storeCategories();
+    });
+  </script>
+{% endblock %}
