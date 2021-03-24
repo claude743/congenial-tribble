@@ -1,0 +1,57 @@
+@mixin snapcraft-graph-tooltip {
+  .snapcraft-graph-tooltip {
+    &__title {
+      border-bottom: 1px solid $color-mid-dark;
+      display: block;
+      font-family: "Ubuntu", sans-serif;
+      font-size: 12px;
+      margin-bottom: 0.5rem;
+      padding-bottom: 0.25rem;
+      text-align: center;
+    }
+
+    &__series {
+      align-items: center;
+      display: flex;
+      font-family: "Ubuntu", sans-serif;
+      font-size: 12px;
+      justify-content: center;
+      margin-top: 0.25rem;
+      width: 215px;
+
+      &:last-child {
+        margin-bottom: 0.25rem;
+      }
+
+      &.is-hovered {
+        font-weight: bold;
+      }
+
+      &-name {
+        display: inline-block;
+        overflow: hidden;
+        text-align: left;
+        text-overflow: ellipsis;
+        width: calc(70% - 0.5rem);
+      }
+
+      &-color {
+        border-radius: 0.75rem;
+        display: inline-block;
+        height: 0.75rem;
+        width: 0.75rem;
+        margin: {
+          right: 0.25rem;
+          top: 0;
+        }
+      }
+
+      &-value {
+        display: inline-block;
+        margin-top: 0;
+        text-align: right;
+        width: calc(30% - 0.5rem);
+      }
+    }
+  }
+}
