@@ -1,0 +1,29 @@
+<h2 class="p-heading--four">Snaps in {{ store.name }}</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Published in</th>
+      <th>Name</th>
+      <th>Latest release</th>
+      <th>Collaborators</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowspan="{{ snaps | length }}">{{ store.name }}</td>
+      <td>{{ snaps[0].name }}</td>
+      <td>-</td>
+      <td>-</td>
+    </tr>
+    {% for snap in snaps %}
+      {% if loop.index > 1 %}
+        <tr>
+          <td>{{ snap.name }}</td>
+          <td>-</td>
+          <td>-</td>
+        </tr>
+      {% endif %}
+    {% endfor %}
+  </tbody>
+</table>
