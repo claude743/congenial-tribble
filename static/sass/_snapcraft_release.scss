@@ -1,0 +1,306 @@
+@mixin snapcraft-release {
+  $color-highlighted: #ffecd4;
+
+  // RELEASES CONFIRM
+
+  .p-releases-confirm {
+    background: $color-light;
+    margin-bottom: 1em;
+    padding: 1em;
+    position: relative;
+  }
+
+  .p-releases-confirm__buttons {
+    position: absolute;
+    right: 1em;
+    top: 10px;
+  }
+
+  // RELEASES TABLE
+
+  .p-releases-table {
+    margin-bottom: $spv-inter--regular;
+  }
+
+  // row
+
+  .p-releases-table__row {
+    border-bottom: 1px solid $color-mid-light;
+    display: flex;
+  }
+
+  .p-releases-table__row--channel {
+    height: 4rem;
+  }
+
+  .p-releases-table__row--heading {
+    height: 2.5rem;
+  }
+
+  .p-releases-table__row--edge {
+    margin-bottom: $spv-inter--shallow-scaleable;
+  }
+
+  .p-releases-table__menus {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: flex-end;
+    margin-top: ($sp-unit - .1rem);
+    width: 125px; // to fit 2 icon buttons exactly
+  }
+
+  // align first (promote) button to left
+  .p-releases-channel__promote {
+    margin-right: auto;
+  }
+
+  // channel cell
+
+  .p-releases-channel {
+    align-items: flex-start;
+    display: flex;
+    flex-shrink: 0;
+    margin-right: 5px;
+    width: 260px;
+
+    .has-active & {
+      opacity: .5;
+    }
+
+    &:hover,
+    &.is-active {
+      opacity: 1;
+    }
+  }
+
+  .p-releases-channel__name {
+    flex-grow: 1;
+    padding-right: $sph-intra--condensed;
+    padding-top: ($spv-intra - .1rem);
+  }
+
+  // release cell
+
+  .p-releases-table__cell {
+    @include vf-animation (#{background-color, border-color}, 0, in);
+    background: $color-light;
+    border-bottom: 3px solid transparent;
+    flex-basis: 100px;
+    flex-grow: 1;
+    margin-left: 1px;
+    max-width: 25.2%; // fill the whole space for 3 archs
+    min-width: 100px;
+    position: relative;
+    transition-duration: 0s; // vf-animation doesn't allow to do that
+
+    .has-active & {
+      opacity: .5;
+    }
+
+    &.is-clickable:focus,
+    &.is-clickable:hover,
+    &.is-active {
+      @include vf-animation (#{background-color, border-color}, fast, in);
+      background-color: $color-x-light;
+      cursor: pointer;
+      opacity: 1;
+    }
+
+    &.is-active {
+      border-color: $color-mid-dark;
+
+      .p-release-data__title {
+        font-weight: bold;
+      }
+
+      .p-tooltip__message {
+        display: none;
+      }
+    }
+
+    &.is-highlighted {
+      background: $color-highlighted;
+    }
+  }
+
+  .p-releases-table__arch {
+    background: none;
+    border: 0;
+    padding: ($spv-intra - .1rem) $sph-intra; // same as p-release-data
+  }
+
+  // cell contents (release info)
+
+  .p-release-buttons {
+    position: absolute;
+    right: .5rem;
+    top: .5rem;
+  }
+
+  .p-release-data {
+    display: flex;
+    height: 100%;
+    max-width: 100%;
+    padding: ($spv-intra - .1rem) $sph-intra; // p-releases-table__arch
+    padding-right: .6rem; // give it a bit more space for version ellipsis
+  }
+
+  .p-release-data__info {
+    width: 100%;
+    white-space: nowrap;
+
+    &.is-pending {
+      font-weight: 400;
+      padding-right: $sph-inter;
+    }
+  }
+
+  .p-release-data__info--empty {
+    display: inline-block;
+    overflow: hidden;
+    padding-bottom: .6em;
+    padding-top: .6em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .p-release-data__meta {
+    color: $color-mid-dark;
+    display: block;
+    font-size: .8em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // REVISIONS LIST
+
+  .p-revisions-list {
+    .col-checkbox-spacer {
+      padding-left: 2rem;
+    }
+
+    .is-clickable {
+      cursor: pointer;
+
+      &:hover {
+        background-color: $color-light;
+      }
+    }
+
+    .is-pending,
+    .is-pending:hover {
+      background: $color-highlighted;
+    }
+  }
+
+  // HELPERS
+
+  .p-help {
+    border-bottom: 1px dashed $color-mid-dark;
+    cursor: help;
+  }
+
+  .p-icon-button {
+    padding: $spv-nudge - $px $sph-intra--condensed * 1.5 - ($px * 2);
+
+    &:not(:last-of-type):not(:only-of-type) {
+      margin-right: .25rem;
+    }
+
+    // workaround for misaligned Vanilla icon
+    // https://github.com/vanilla-framework/vanilla-framework/issues/2085
+    & .p-icon--delete {
+      left: -1px;
+      top: -3px;
+    }
+
+    // don't grow these buttons to 100% width on mobile
+    @media (max-width: $breakpoint-small) {
+      width: auto;
+    }
+  }
+
+  .p-text-icon {
+    display: inline-block;
+    width: 14px;
+  }
+
+  .p-action-button {
+    background: none;
+    border: 0;
+    display: block;
+    line-height: 14px;
+    padding: 2px 4px;
+
+    .p-icon--close {
+      height: 14px;
+      width: 14px;
+    }
+  }
+
+  .p-contextual-menu__dropdown {
+    overflow: visible; // allow tooltips inside menu
+
+    .p-tooltip {
+      display: block;
+    }
+  }
+
+  .p-contextual-menu__dropdown.is-wide {
+    min-width: 16rem;
+  }
+
+  .p-contextual-menu__link {
+    color: $color-link;
+    padding-bottom: $sp-x-small;
+    padding-top: $sp-x-small;
+  }
+
+  .p-contextual-menu__link.is-indented {
+    padding-left: 1rem;
+  }
+
+  .p-contextual-menu__link.is-disabled {
+    background: $color-x-light;
+    color: $color-mid-dark;
+    cursor: not-allowed;
+    opacity: .5;
+  }
+
+  .p-contextual-menu__item {
+    @extend .p-contextual-menu__link; // sass-lint:disable-line placeholder-in-extend
+    color: $color-dark;
+
+    &:hover {
+      background: transparent;
+      cursor: default;
+    }
+  }
+
+  .p-contextual-menu__description {
+    color: $color-dark;
+    display: block;
+    font-size: .8rem;
+    line-height: 1.4;
+    margin-bottom: $sp-x-small;
+    margin-top: $sp-x-small;
+    white-space: normal;
+  }
+
+  .p-tooltip__group {
+    margin-top: $sp-x-small;
+  }
+
+  .p-select-button {
+    @extend %vf-input-elements;
+    // based on vanilla select styles from  _base_forms.scss
+    background: $color-x-light url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxuczpza2V0Y2g9Imh0dHA6Ly93d3cuYm9oZW1pYW5jb2RpbmcuY29tL3NrZXRjaC9ucyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiBoZWlnaHQ9IjRweCIgd2lkdGg9IjEwcHgiIHZlcnNpb249IjEuMSIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHZpZXdCb3g9IjAgMCAxMCA0Ij4gPHRpdGxlPmFjY29yZGlvbi1vcGVuPC90aXRsZT4gPGRlc2M+Q3JlYXRlZCB3aXRoIFNrZXRjaC48L2Rlc2M+IDxnIGlkPSJmaWx0ZXItcGFuZWwiIGZpbGwtcnVsZT0iZXZlbm9kZCIgc2tldGNoOnR5cGU9Ik1TUGFnZSIgZmlsbD0ibm9uZSI+ICA8ZyBpZD0iYWNjb3JkaW9uLW9wZW4iIGZpbGw9IiM4ODgiIHNrZXRjaDp0eXBlPSJNU0FydGJvYXJkR3JvdXAiPiAgIDxwYXRoIGlkPSJjaGV2cm9uIiBza2V0Y2g6dHlwZT0iTVNTaGFwZUdyb3VwIiBkPSJtNi4zNjEgMC44NjIzYzAuNTE4IDAuMzY1IDEuMDUyIDAuNzc4MSAxLjYwMSAxLjIzOCAwLjU0OSAwLjQ1ODUgMS4wODkgMC45NTE4IDEuNjIxIDEuNDc3MiAwLjE0MiAwLjE0MDQgMC4yODEgMC4yODIxIDAuNDE1IDAuNDIyNWgtMS41NDFjLTAuMzA0LTAuMjg4OC0wLjYyLTAuNTcwOS0wLjk0Ny0wLjg0NjMtMC4xMzc5LTAuMTE2MS0wLjI3NjgtMC4yMjk3LTAuNDE2OC0wLjM0MDgtMC4xNjM2LTAuMTI5Ny0wLjMyODYtMC4yNTU4LTAuNDk1NC0wLjM3ODMtMC4wODUyLTAuMDYyNS0wLjE3MDgtMC4xMjQxLTAuMjU2OC0wLjE4NDYtMC4zOTctMC4yODIxLTAuOTM1LTAuNjI1Ny0xLjMxNS0wLjg0NzZoLTAuMDU0Yy0wLjM4IDAuMjIxOS0wLjkxOCAwLjU2NTUtMS4zMTUgMC44NDc2LTAuMzk4IDAuMjgwNy0wLjc4OCAwLjU4MjktMS4xNjkgMC45MDM3LTAuMzI3IDAuMjc1NC0wLjY0MyAwLjU1NzUtMC45NDcgMC44NDYzaC0xLjU0MWMwLjEzNS0wLjE0MDQgMC4yNzMtMC4yODIxIDAuNDE1LTAuNDIyNSAwLjUzMi0wLjUyNTQgMS4wNzItMS4wMTg3IDEuNjIxLTEuNDc3MiAwLjU1LTAuNDU5OSAxLjA4My0wLjg3MyAxLjYwMS0xLjIzOCAwLjUxOS0wLjM2NDk3IDAuOTczLTAuNjUyNDEgMS4zNjItMC44NjIzIDAuMzkgMC4yMDk4OSAwLjg0NCAwLjQ5NzMzIDEuMzYyIDAuODYyM3oiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQuOTk5IDIpIHJvdGF0ZSgxODApIHRyYW5zbGF0ZSgtNC45OTkgLTIpIi8+ICA8L2c+IDwvZz48L3N2Zz4=') no-repeat;
+    background-position: right $sph-intra--condensed center;
+    background-size: map-get($icon-sizes, accordion);
+    color: $color-dark;
+    min-height: 24px;
+    min-width: 100px; // smaller then normal
+    padding-right: $sph-intra--expanded;
+    text-align: left;
+  }
+}

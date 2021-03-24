@@ -1,0 +1,46 @@
+{% set fsf_step = "test" %}
+{% extends "first-snap/_layout_fsf.html" %}
+
+{% block fsf_content %}
+  <div class="row">
+    <div class="col-8">
+      <ol class="p-list-step has-margin">
+        {% for step in steps %}
+          <li class="p-list-step__item">
+            <h4 class="p-list-step__title">
+              <span class="p-list-step__bullet">{{ loop.index }}</span>
+              {{ step.action|safe }}
+            </h4>
+            {% if step.command %}
+              {% set snippet_value = step.command|replace("${name}", snap_name) %}
+              {% set snippet_id = loop.index %}
+              {% if snippet_value.count('\n') == 0 %}
+                {% include "/partials/_code-snippet.html" %}
+              {% else %}
+                {% include "/partials/_code-snippet-multi.html" %}
+              {% endif %}
+            {% endif %}
+            {% if step.warning %}
+                <div class="p-notification--caution">
+                  <p class="p-notification__response">
+                    {{ step.warning|replace("${name}", snap_name)|safe }}
+                  </p>
+                </div>
+              {% endif %}
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+{% endblock %}
+
+{% block fsf_pagination %}
+  <a class="p-pagination__link--previous" href="/first-snap/{{ language }}/{{ os }}/build">
+    <span class="p-pagination__label">Previous</span>
+    <span class="p-pagination__title">Build snap</span>
+  </a>
+  <a class="p-pagination__link--next" href="/first-snap/{{ language }}/{{ os }}/push">
+    <span class="p-pagination__label">Next</span>
+    <span class="p-pagination__title">Publish to store</span>
+  </a>
+{% endblock %}

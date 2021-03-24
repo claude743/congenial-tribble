@@ -1,0 +1,89 @@
+@mixin snapcraft-market-screenshots {
+  .p-listing-images {
+    justify-content: flex-start;
+    margin-right: -$spv-intra;
+    min-height: 120px;
+    position: relative;
+  }
+
+  .p-listing-images__image {
+    $screenshot-thumb-size: 123px; // make it fit exactly on full screen width
+
+    align-items: center;
+    background: $color-light;
+    border: 1px solid $color-light;
+    border-radius: $border-radius;
+    color: $color-link;
+    cursor: grab;
+    display: flex;
+    flex-grow: 0;
+    height: $screenshot-thumb-size;
+    justify-content: center;
+    margin-bottom: $spv-intra;
+    margin-right: $spv-intra;
+    min-width: auto;
+    position: relative;
+    width: $screenshot-thumb-size;
+
+    .p-listing-images__delete-image {
+      background: $color-x-light;
+      border-radius: 0 .125rem 0 0;
+      cursor: pointer;
+      height: 1rem;
+      right: 0;
+      top: 0;
+    }
+
+    &.p-file-input.is-dragging::after {
+      right: $spv-intra;
+    }
+
+    .p-listing-images__delete-image .p-icon--delete {
+      display: block;
+      top: 0;
+    }
+
+    &--no-show {
+      justify-self: flex-start;
+
+      img {
+        filter: sepia(100%) hue-rotate(300deg);
+      }
+    }
+
+    &.is-dragging {
+      margin-right: 0;
+    }
+
+    &:not(.is-empty):hover,
+    &:not(.is-empty):focus {
+      border: 1px solid $color-link;
+
+      .p-listing-images__delete-image {
+        opacity: 1;
+      }
+    }
+
+    .p-listing-images__add-image {
+      background: $color-x-light;
+      border: 1px solid $color-mid-light;
+      cursor: pointer;
+      position: static;
+      z-index: 1;
+    }
+
+    img {
+      align-self: center;
+      max-height: 100%;
+      max-width: 100%;
+      pointer-events: none;
+      user-select: none;
+    }
+  }
+
+  .p-listing-images__add-image {
+    background: $color-x-light;
+    border: 1px solid $color-mid-light;
+    cursor: pointer;
+  }
+}

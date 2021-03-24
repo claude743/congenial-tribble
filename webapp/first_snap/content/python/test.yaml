@@ -1,0 +1,17 @@
+name: test-offlineimap-{name}
+macos:
+  - action: Create a Linux virtual machine for testing snaps
+    command: multipass launch -n testvm
+  - action: Return to the directory containing the .snap file and copy it into the virtual machine
+    command: 'multipass copy-files offlineimap*.snap testvm:'
+  - action: Connect to the virtual machine
+    command: multipass shell testvm
+  - action: Install the snap inside the virtual machine
+    command: sudo snap install --devmode --dangerous offlineimap*.snap
+  - action: Confirm the snap is installed by listing your installed snaps
+    command: snap list
+  - action: Run the snap inside the virtual machine
+    warning: Make sure the name matches what has been used previously (i.e <code>${name}</code>).
+    command: ${name} -h
+  - action: Exit the virtual machine
+    command: exit

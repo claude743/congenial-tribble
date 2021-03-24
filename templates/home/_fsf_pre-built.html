@@ -1,0 +1,46 @@
+<div class="col-12 p-flow-details" style="display: none" data-flow-details="pre-built">
+  <div class='col-6'>
+      <h4>Why are snaps good for pre-built apps?</h4>
+      <ul>
+        <li>Easy to discover and install by millions using the Snap Store or command-line every day</li>
+        <li>Automatically updated to the latest stable version of your app</li>
+        <li>Revert to the previous version if an update fails, preserving data</li>
+        <li>Isolation ensures no conflicts between applications</li>
+        <li>Identical behaviour across Linux distributions, even with library dependencies</li>
+      </ul>
+      <p>
+        Distributing the Linux build of your app as a zip lets you provide one download and set of instructions for all of Linux.
+        However, end user discovery and update management remain a challenge.
+        Snaps fill this gap, letting you wrap your existing Linux build in an app store experience for end users.
+      </p>
+      <div class="p-flow-details__continue">
+        <p>In just a few steps, you’ll have an example pre-built app in the Snap Store.</p>
+        <a class="p-button--positive" href="/first-snap/pre-built">Continue</a>
+      </div>
+  </div>
+
+  <div class='col-6'>
+    <h4>How <a href="https://www.geekbench.com/">geekbench4</a> defines <code>snapcraft.yaml</code></h4>
+    <code class="p-code-yaml"><pre><b>name</b>: geekbench4
+<b>version</b>: 4.2.0
+<b>summary</b>: Cross-Platform Benchmark
+<b>description</b>: |
+  Geekbench 4 measures your system's power and tells
+  you whether your computer is ready to roar. How
+  strong is your mobile device or desktop computer?
+  How will it perform when push comes to crunch?
+  These are the questions that Geekbench can answer.
+
+<b>confinement</b>: devmode
+<b>base</b>: core18
+
+<b>parts</b>:
+  <b>geekbench4</b>:
+    <b>plugin</b>: dump
+    <b>source</b>: http://cdn.geekbench.com/Geekbench-$SNAPCRAFT_PROJECT_VERSION-Linux.tar.gz
+
+<b>apps</b>:
+  <b>geekbench4</b>:
+    <b>command</b>: geekbench4</pre></code>
+  </div>
+</div>

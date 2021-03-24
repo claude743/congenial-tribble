@@ -1,0 +1,17 @@
+<div id="js-snap-{{ category }}">
+    {% if has_featured %}
+        {% if snaps[0]["icon_url"] != "" %}
+            {% set snap = snaps[0] %}
+            {% include "store/_generated-featured-snap-partial.html" %}
+        {% endif %}
+    {% endif %}
+    <div class="snapcraft-p-grid{% if has_featured %} snapcraft-p-grid--featured{% endif %}">
+        {% set show_summary = True %}
+        {% for snap in snaps %}
+            {% set media_object_classname = "u-no-margin--bottom" %}
+            {% if loop.index != 1 or snap["icon_url"] == "" %}
+                {% include "store/_media-object-snap-partial.html" %}
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>

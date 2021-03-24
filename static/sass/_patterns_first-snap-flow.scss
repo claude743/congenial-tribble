@@ -1,0 +1,45 @@
+@mixin snapcraft-p-first-snap-flow {
+  .p-flow-details {
+    width: 100%;
+  }
+
+  .p-flow-details__continue {
+    clear: both;
+  }
+
+  .p-code-yaml {
+    font-size: 14px;
+    line-height: 1.5em;
+
+    b {
+      color: $color-positive;
+    }
+  }
+
+  // workaround for bringing back default p styles in accordion
+  // before this vanilla bug is fixed:
+  // https://github.com/canonical-web-and-design/vanilla-framework/issues/2301
+  .p-accordion p {
+    margin-bottom: map-get($sp-after, p) - map-get($nudges, nudge--p);
+  }
+
+  .p-accordion__step {
+    display: block;
+    float: left;
+    width: 3rem;
+  }
+
+  .p-accordion__panel {
+    overflow: visible;
+    padding-left: 4rem;
+  }
+
+  .p-form-validation__message {
+    display: none;
+
+    .is-error & {
+      color: $color-negative;
+      display: block;
+    }
+  }
+}
